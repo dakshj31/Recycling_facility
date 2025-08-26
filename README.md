@@ -1,61 +1,102 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# ♻ Recycling Facility Directory
 
-## About Laravel
+A Laravel-based web application to manage and browse a directory of recycling facilities.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 📌 Features
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+* User authentication (Register, Login, Logout).
+* Manage recycling facilities (Add, Edit, Delete).
+* Assign multiple materials to each facility (Many-to-Many relationship).
+* Search facilities by name or address.
+* Filter facilities by material type.
+* Sort facilities by last updated date.
+* Facility detail page with Google Maps embed for the address.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 🗂 Database Design & Relationships
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+* **Users Table** → Manages registered users for authentication.
+* **Facilities Table** → Stores facility details (business name, address, city, state, postal code, last update date).
+* **Materials Table** → Stores types of recyclable materials (e.g., Plastic, Glass, Metal).
+* **facility\_material (Pivot Table)** → Many-to-Many relationship between Facilities and Materials.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Relationships:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+* `Facility` ↔ `Material` → Many-to-Many
+* `User` → Can manage facilities (CRUD)
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## 🔍 Search, Filter & Sort
 
-### Premium Partners
+* **Search**: Users can search facilities by business name, street address, city, or state.
+* **Filter**: Dropdown filter to display only facilities accepting a specific material.
+* **Sort**: Option to sort facilities by latest update date and Name.
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+---
 
-## Contributing
+## 🔑 Authentication & Registration
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+* **Register**: New users can create an account (Name, Email, Password).
+* **Login**: Registered users can log in with email and password.
+* **Logout**: Securely log out.
+* Only authenticated users can manage facilities (CRUD).
+* Guests can browse facilities but must log in to modify them.
 
-## Code of Conduct
+### 🧪 Demo Credentials
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+When you seed the database, a demo user is created:
 
-## Security Vulnerabilities
+```
+Email: test@example.com
+Password: password
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Use this to log in immediately after `php artisan migrate --seed`.
 
-## License
+---
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 🚀 Extra Features
+
+* Facility detail page shows **all information** about the facility.
+* Integrated **Google Maps embed** to display the facility’s location.
+* Clean and responsive UI using **Bootstrap 5**.
+
+---
+
+## ⚙️ Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/your-username/Recycling_facility.git
+   cd Recycling_facility
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   composer install
+   npm install && npm run dev
+   ```
+
+3. Configure `.env` (database, mail, etc.).
+
+4. Run migrations & seed database:
+
+   ```bash
+   php artisan migrate --seed
+   ```
+
+5. Start the server:
+
+   ```bash
+   php artisan serve
+   ```
+
+6. Open [http://localhost:8000](http://localhost:8000) in your browser and log in using the demo credentials.
+
+---
+

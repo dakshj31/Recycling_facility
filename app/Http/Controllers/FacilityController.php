@@ -9,26 +9,38 @@ use Illuminate\Http\Request;
 
 class FacilityController extends Controller
 {
-    public function index(Request $request)
-    {
-        $query = Facility::with('materials');
+   public function index(Request $request)
+{
+    $query = Facility::with('materials');
 
-        //  Filter by material
-        if ($materialId = $request->input('material')) {
-            $query->whereHas('materials', fn($q) =>
-                $q->where('materials.id', $materialId));
-        }
-
-        //  Sort
-        if ($request->input('sort') === 'last_update') {
-            $query->orderBy('last_update_date', 'desc');
-        }
-
-        $facilities = $query->paginate(10);
-        $materials = Material::all();
-
-        return view('facilities.index', compact('facilities', 'materials'));
+    //  Search (business name, city, state)
+    if ($search = $request->input('search')) {
+        $query->where(function ($q) use ($search) {
+            $q->where('business_name', 'like', "%{$search}%")
+              ->orWhere('city', 'like', "%{$search}%")
+              ->orWhere('state', 'like', "%{$search}%");
+        });
     }
+
+    //  Filter by material
+    if ($materialId = $request->input('material')) {
+        $query->whereHas('materials', fn($q) =>
+            $q->where('materials.id', $materialId));
+    }
+
+    //  Sorting
+    if ($request->input('sort') === 'last_update') {
+        $query->orderBy('last_update_date', 'desc');
+    } elseif ($request->input('sort') === 'name') {
+        $query->orderBy('business_name', 'asc');
+    }
+
+    $facilities = $query->paginate(10)->appends($request->query()); // keep filters in pagination
+    $materials = Material::all();
+
+    return view('facilities.index', compact('facilities', 'materials'));
+}
+
 
     public function create()
     {

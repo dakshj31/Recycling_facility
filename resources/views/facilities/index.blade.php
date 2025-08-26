@@ -22,7 +22,7 @@
                 </form>
             @else
                 <a href="{{ route('login') }}" class="btn btn-sm btn-primary">Login</a>
-                {{--  --}}
+                
             @endauth
         </div>
     </div>
@@ -55,20 +55,52 @@
         </div>
     @endauth
 
-    <!-- Filter Form -->
-<form method="GET" action="{{ route('facilities.index') }}" class="d-flex">
-    <select name="material" class="form-select me-2" onchange="this.form.submit()">
-        <option value="">-- Filter by Material --</option>
-        @foreach($materials as $mat)
-            <option value="{{ $mat->id }}" {{ request('material') == $mat->id ? 'selected' : '' }}>
-                {{ $mat->name }}
-            </option>
-        @endforeach
+   <!-- Search + Filter Form + Sort -->
+<form method="GET" action="{{ route('facilities.index') }}" class="row g-2 mb-3">
+
+    <!-- Search -->
+    <div class="col-md-4">
+        <input type="text" 
+               name="search" 
+               value="{{ request('search') }}" 
+               class="form-control" 
+               placeholder="Search by name, city, or state">
+    </div>
+
+    <!-- Filter by Material -->
+    <div class="col-md-4">
+        <select name="material" class="form-select">
+            <option value="">-- Filter by Material --</option>
+            @foreach($materials as $mat)
+                <option value="{{ $mat->id }}" {{ request('material') == $mat->id ? 'selected' : '' }}>
+                    {{ $mat->name }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+
+<!-- Sort By -->
+<div class="col-md-4">
+    <select name="sort" class="form-select">
+        <option value="">-- Sort By --</option>
+        <option value="name" {{ request('sort') == 'name' ? 'selected' : '' }}>Business Name (A-Z)</option>
+        <option value="last_update" {{ request('sort') == 'last_update' ? 'selected' : '' }}>Last Updated (Newest)</option>
     </select>
-    <noscript>
-        <button type="submit" class="btn btn-sm btn-secondary">Filter</button>
-    </noscript>
+</div>
+
+
+
+    <!-- Buttons -->
+    <div class="col-md-4 d-flex">
+        <button type="submit" class="btn btn-primary me-2">
+            <i class="fas fa-search"></i> Apply
+        </button>
+        <a href="{{ route('facilities.index') }}" class="btn btn-secondary">
+            <i class="fas fa-times"></i> Clear
+        </a>
+    </div>
 </form>
+
 
 
     <!-- Facilities Table -->
