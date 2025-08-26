@@ -75,28 +75,21 @@ Use this to log in immediately after `php artisan migrate --seed`.
    cd Recycling_facility
    ```
 
-2. Install dependencies:
+2. Configure `.env` (database, mail, etc.).
 
-   ```bash
-   composer install
-   npm install && npm run dev
-   ```
-
-3. Configure `.env` (database, mail, etc.).
-
-4. Run migrations & seed database:
+3. Run migrations & seed database:
 
    ```bash
    php artisan migrate --seed
    ```
 
-5. Start the server:
+4. Start the server:
 
    ```bash
    php artisan serve
    ```
 
-6. Open [http://localhost:8000](http://localhost:8000) in your browser and log in using the demo credentials.
+5. Open [http://localhost:8000](http://localhost:8000) in your browser and log in using the demo credentials.
 
 ---
 
